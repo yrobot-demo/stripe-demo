@@ -97,7 +97,9 @@ export default function CheckoutForm({
                 ].map(({ label, card }) => (
                   <div className="flex items-center" key={card}>
                     <div className="mr-auto">{label}</div>
-                    <div className="">{card}</div>
+                    <div className="clipboard" data-clipboard-text={card}>
+                      {card}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -105,11 +107,19 @@ export default function CheckoutForm({
           },
           {
             title: "有效期",
-            content: <div className="">1224</div>,
+            content: (
+              <div className="clipboard" data-clipboard-text="1224">
+                1224
+              </div>
+            ),
           },
           {
             title: "CVC",
-            content: <div className="">135</div>,
+            content: (
+              <div className="clipboard" data-clipboard-text="135">
+                135
+              </div>
+            ),
           },
         ].map(({ title, content }) => (
           <div className="" key={title}>

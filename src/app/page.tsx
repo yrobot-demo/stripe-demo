@@ -1,8 +1,9 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useRequest } from "ahooks";
+import ClipboardJS from "clipboard";
 
 import { products } from "@/db";
 
@@ -46,7 +47,18 @@ export default function Home() {
       .then((data) => data?.clientSecret)
   );
 
-  console.log({ clientSecret });
+  useEffect(() => {
+    var clipboard = new ClipboardJS(".clipboard", {});
+    clipboard.on("success", function (e) {
+      (e.trigger as HTMLElement).style.setProperty(
+        "--tooltip-content",
+        JSON.stringify("copied")
+      );
+      setTimeout(() => {
+        (e.trigger as HTMLElement).style.removeProperty("--tooltip-content");
+      }, 2000);
+    });
+  }, []);
 
   const options = {
     clientSecret,
@@ -83,8 +95,16 @@ export default function Home() {
         </div>
       )}
       {stepIndex === 1 && (
-        <div className="flex justify-center items-center text-6xl font-semibold py-32">
-          Pay Success!!!
+        <div className="flex flex-col justify-center items-center">
+          <p className="text-6xl font-semibold py-32">Pay Success!!!</p>
+          <button
+            className="mt-8"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            Reload
+          </button>
         </div>
       )}
     </main>
