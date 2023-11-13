@@ -3,6 +3,7 @@ import { products } from "@/db";
 import { useState } from "react";
 import {
   PaymentElement,
+  AddressElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
@@ -55,7 +56,17 @@ export default function CheckoutForm({
     <>
       <form id="payment-form" onSubmit={handleSubmit}>
         <div className="relative mt-4">
-          <PaymentElement />
+          <PaymentElement
+            onChange={(e) => {
+              console.log(e);
+            }}
+          />
+          <AddressElement
+            options={{ mode: "billing" }}
+            onChange={(e) => {
+              console.log(e);
+            }}
+          />
           <div className="mt-6 border-t border-b py-2">
             <div className="flex items-center justify-between">
               <p className="text-sm font-medium text-gray-900">Product Count</p>
